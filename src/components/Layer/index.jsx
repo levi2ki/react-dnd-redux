@@ -3,10 +3,10 @@ import Item from '../Item';
 import './styles/Layer.css';
 
 
-// TODO: here
 export default class Layer extends React.Component {
   render() {
     const {itemsById} = this.props;
+    console.log(itemsById);
     if (!itemsById || itemsById.length === 0) {
       return (
         <div>Loading...</div>
@@ -15,7 +15,7 @@ export default class Layer extends React.Component {
     return (
       <div  className='layer'>
           {itemsById.map( _i => (
-            <Item key={_i.id} id={_i.id}>
+            <Item key={_i.id} id={_i.id} reorderCard={this.props.reorderCard}>
               {_i.text}
             </Item>
           ))}

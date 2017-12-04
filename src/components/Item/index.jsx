@@ -20,7 +20,15 @@ function collect(connect, monitor) {
   }
 }
 
-const itemTarget = {};
+const itemTarget = {
+  hover(props, monitor, component) {
+
+    if (props.id === monitor.getItem().id) {
+      return;
+    }
+    props.reorderCard(monitor.getItem().id, props.id);
+  }
+};
 
 function collectDrop(connect, monitor) {
   return {

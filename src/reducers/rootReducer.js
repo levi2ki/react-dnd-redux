@@ -1,9 +1,9 @@
 import {v4} from 'uuid';
 import { combineReducers } from "redux";
 
-import {INIT_LIST, INIT_LIST_ORDER} from '../constants/actionTypes';
+import {INIT_LIST, INIT_LIST_ORDER, REORDER_CARD} from '../constants/actionTypes';
 
-const initialState = [
+const data = [
   {
     id: v4(),
     text: 'first'
@@ -27,9 +27,16 @@ const initialState = [
 ]
 
 
-const cards = (state=initialState, action) => {
+const cards = (state={}, action) => {
   switch (action.type) {
     case INIT_LIST:
+      const nextState = {};
+      data.forEach((_i) => {
+        nextState[_i.id] = _i;
+      })
+      return {
+        ...nextState
+      }
     default:
       return state;
   }
@@ -39,15 +46,17 @@ const drawOrder = (state = [], action) => {
   switch (action.type) {
     case INIT_LIST_ORDER:
       return action.payload;
+    case REORDER_CARD:
+      // DEBUG: emit reorder
+      console.log(`reorder emitted with ${action.substituteId} to change to ${action.replacedId}`);
+      var newArr = [...state];
+      newArr[state.indexOf(action.substituteId)] = action.replacedId;
+      newArr[state.indexOf(action.replacedId)] = action.substituteId;
+      return newArr;
     default:
       return state;
   }
-}
-const isFetching = (state = true, action) => {
-  // switch(action.type) {
-
-  // }
-}
+};
 
 const rootReducer = combineReducers({
   cards,

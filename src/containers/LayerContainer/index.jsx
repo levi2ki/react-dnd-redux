@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 // import { bindActionCreators } from "redux";
 import Layer from '../../components/Layer/index';
-// import {initList} from '../../actions/index';
+import {reorderCard} from '../../actions/index';
 
 class LayerContainer extends React.Component {
   render() {
@@ -12,8 +12,12 @@ class LayerContainer extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  itemsById: state.drawOrder.map(_i => state.cards[_i])
-})
+const mapStateToProps = (state) => {
+  return {
+    itemsById: state.drawOrder.map((_x) => {
+      return state.cards[_x];
+    })
+  }
+}
 
-export default connect(mapStateToProps)(LayerContainer);
+export default connect(mapStateToProps, {reorderCard})(LayerContainer);
