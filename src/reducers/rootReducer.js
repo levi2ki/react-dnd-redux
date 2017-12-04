@@ -43,6 +43,11 @@ const drawOrder = (state = [], action) => {
       return state;
   }
 }
+const isFetching = (state = true, action) => {
+  // switch(action.type) {
+
+  // }
+}
 
 const rootReducer = combineReducers({
   cards,

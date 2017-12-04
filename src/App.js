@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import Layer from './components/Layer';
+import LayerContainer from './containers/LayerContainer/index';
 import './App.css';
 
 import { connect } from 'react-redux';
@@ -15,7 +15,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Layer />
+        <LayerContainer />
       </div>
     );
   }

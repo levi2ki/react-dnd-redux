@@ -1,18 +1,24 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {v4} from 'uuid';
 import Item from '../Item';
 import './styles/Layer.css';
 
+
+// TODO: here
 export default class Layer extends React.Component {
   render() {
+    const {itemsById} = this.props;
+    if (!itemsById || itemsById.length === 0) {
+      return (
+        <div>Loading...</div>
+      )
+    }
     return (
       <div  className='layer'>
-        <Item id={v4()}> 1 </Item>
-        <Item id={v4()}> 2 </Item>
-        <Item id={v4()}> 3 </Item>
-        <Item id={v4()}> 4 </Item>
-        <Item id={v4()}> 5 </Item>
+          {itemsById.map( _i => (
+            <Item key={_i.id} id={_i.id}>
+              {_i.text}
+            </Item>
+          ))}
       </div>
     )
   }
