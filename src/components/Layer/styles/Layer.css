@@ -1,0 +1,8 @@
+.layer {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+}
