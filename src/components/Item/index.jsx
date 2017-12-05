@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { findDOMNode } from 'react-dom';
 import { DragSource, DropTarget } from "react-dnd";
 
 import './styles/Item.css';
@@ -20,12 +20,42 @@ function collect(connect, monitor) {
   }
 }
 
+// drop
 const itemTarget = {
   hover(props, monitor, component) {
+    const drag = monitor.getItem();
 
-    if (props.id === monitor.getItem().id) {
+    if (props.id === drag.id) {
       return;
     }
+
+    // getting elements coordinates to variables
+    const hoverNodeCoords = findDOMNode(component).getBoundingClientRect();
+    // get middle point coordinate of hovered element
+    const hoverMidXPoint = hoverNodeCoords.left + hoverNodeCoords.width / 2;
+    const hoverMidYPoint = hoverNodeCoords.top + hoverNodeCoords.height / 2;
+    // get half of half width and hegiht rectangle 
+    const hoverWithinX = hoverNodeCoords.width / 4;
+    const hoverWithinY = hoverNodeCoords.height / 4;
+
+    const dragCoords = monitor.getClientOffset();
+
+    // if x within hoverWithinX from left or right from middle point
+    const ifElemWithinDroppableRangeX = (dragCoords.x > (hoverMidXPoint + hoverWithinX)) || (dragCoords.x < (hoverMidXPoint - hoverWithinX));
+    // if y within hoverWithinY from top or bottom from middle point
+    const ifElemWithinDroppableRangeY = (dragCoords.y > (hoverMidYPoint + hoverWithinY)) || (dragCoords.y < (hoverMidYPoint - hoverWithinY));
+    // this coords are unacceptable. only accept centered half-element-size rectangle
+    if(ifElemWithinDroppableRangeY && !ifElemWithinDroppableRangeX) {
+      // if element within X-range but not in Y-range
+      return;
+    } else if (!ifElemWithinDroppableRangeY && ifElemWithinDroppableRangeX) {
+      // if element within Y-range but not in X-range
+      return;
+    } else if (ifElemWithinDroppableRangeY && ifElemWithinDroppableRangeX) {
+      // if both X and Y not in range
+      return;
+    }
+
     props.reorderCard(monitor.getItem().id, props.id);
   }
 };

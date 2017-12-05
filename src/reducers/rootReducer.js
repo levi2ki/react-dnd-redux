@@ -47,11 +47,19 @@ const drawOrder = (state = [], action) => {
     case INIT_LIST_ORDER:
       return action.payload;
     case REORDER_CARD:
-      // DEBUG: emit reorder
-      console.log(`reorder emitted with ${action.substituteId} to change to ${action.replacedId}`);
       var newArr = [...state];
-      newArr[state.indexOf(action.substituteId)] = action.replacedId;
-      newArr[state.indexOf(action.replacedId)] = action.substituteId;
+      // TODO: remove hardCode
+      newArr.splice(newArr.indexOf(action.substituteId), 1);
+      if(state.indexOf(action.substituteId) > state.indexOf(action.replacedId)) {
+        newArr.splice(newArr.indexOf(action.replacedId),0, action.substituteId)
+      } else {
+        newArr.splice(newArr.indexOf(action.replacedId)+1,0, action.substituteId)
+      }
+      
+
+      // newArr[state.indexOf(action.substituteId)] = action.replacedId;
+      // newArr[state.indexOf(action.replacedId)] = action.substituteId;
+
       return newArr;
     default:
       return state;

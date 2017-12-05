@@ -6,7 +6,7 @@ import './styles/Layer.css';
 export default class Layer extends React.Component {
   render() {
     const {itemsById} = this.props;
-    console.log(itemsById);
+    
     if (!itemsById || itemsById.length === 0) {
       return (
         <div>Loading...</div>
