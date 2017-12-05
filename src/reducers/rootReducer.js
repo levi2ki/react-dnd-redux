@@ -48,15 +48,15 @@ const drawOrder = (state = [], action) => {
       return action.payload;
     case REORDER_CARD:
       var newArr = [...state];
-      // TODO: remove hardCode
       newArr.splice(newArr.indexOf(action.substituteId), 1);
+      // this two states required because we have 2 dimensions move
       if(state.indexOf(action.substituteId) > state.indexOf(action.replacedId)) {
+        // if drag element below drop element - replace drop element
         newArr.splice(newArr.indexOf(action.replacedId),0, action.substituteId)
       } else {
+        // if drag element before drop element - replace element below drop element
         newArr.splice(newArr.indexOf(action.replacedId)+1,0, action.substituteId)
       }
-      
-
       // newArr[state.indexOf(action.substituteId)] = action.replacedId;
       // newArr[state.indexOf(action.replacedId)] = action.substituteId;
 
